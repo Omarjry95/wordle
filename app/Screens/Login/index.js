@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Text, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, KeyboardAvoidingView, TouchableOpacity, Keyboard, TouchableWithoutFeedback, Image } from 'react-native';
 import { styles } from './styles';
 import {theme} from "../../Design/theme";
 import {loginInputs} from "./constants";
@@ -12,6 +12,8 @@ const Login = () => {
         password: 'loulou95'
     });
     const [focused, setFocused] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [authError, setAuthError] = useState(false);
 
     const onChangeCredentials = (id, text) => {
         setCredentials({
@@ -23,53 +25,76 @@ const Login = () => {
     const submitLogin = () => {
         const { username, password } = credentials;
 
+        setAuthError(false);
+
+        Keyboard.dismiss();
+
+        setLoading(true);
+
         const auth = getAuth();
 
         signInWithEmailAndPassword(auth, username, password)
-            .then((userCredential) => {
-                console.log(userCredential.user);
+            .then(() => {
+                setLoading(false);
             })
-            .catch((error) => {
-                console.log(error.code);
-                console.log(error.message);
+            .catch(() => {
+                setLoading(false);
+                setAuthError(true);
             });
     }
 
-    return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={styles.container}
-        >
-            <Text style={styles.welcomeText}>Bienvenue à votre source éternelle d'ondes positives.</Text>
-
-            {loginInputs.map((input, index, array) => (
-                <View style={{...styles.inputContainer,
-                    marginBottom: index !== array.length - 1 ? 20 : 0}}
+    return (loading ?
+            (<View style={styles.loaderContainer}>
+                <Image
+                    source={require('../../../assets/loading.gif')}
+                    style={styles.loader}
+                />
+            </View>)
+            :
+            (<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === "ios" ? "padding" : "height"}
+                    style={styles.container}
                 >
-                    <Text style={styles.inputLabel}>{input.label}</Text>
+                    <Text style={styles.welcomeSentence}>Bienvenue à votre source</Text>
+                    <Text style={styles.welcomeText}>éternelle d'ondes positives.</Text>
 
-                    <TextInput
-                        style={{...styles.input,
-                            borderWidth: focused === index ? 2 : 0}}
-                        selectionColor={theme.primaryColor}
-                        secureTextEntry={input.password}
-                        value={credentials[input.id]}
-                        onChangeText={(text) => onChangeCredentials(input.id, text)}
-                        onFocus={() => setFocused(index)}
-                        onBlur={() => setFocused(null)}
-                    />
-                </View>
-            ))}
+                    {loginInputs.map((input, index, array) => (
+                        <View style={{...styles.inputContainer,
+                            marginBottom: index !== array.length - 1 ? 20 : 0}}
+                        >
+                            <Text style={styles.inputLabel}>{input.label}</Text>
 
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={submitLogin}
-                >
-                    <Text style={styles.buttonLabel}>Je veux prendre ma dose quotidienne</Text>
-                </TouchableOpacity>
-            </View>
-        </KeyboardAvoidingView>
+                            <TextInput
+                                style={{...styles.input,
+                                    borderWidth: focused === index ? 2 : 0}}
+                                selectionColor={theme.primaryColor}
+                                secureTextEntry={input.password}
+                                value={credentials[input.id]}
+                                onChangeText={(text) => onChangeCredentials(input.id, text)}
+                                onFocus={() => setFocused(index)}
+                                onBlur={() => setFocused(null)}
+                            />
+                        </View>
+                    ))}
+
+                    {authError &&
+                    (<Text style={styles.errorMessage}>
+                        Votre tentative de connexion a échoué. Veuillez réessayer.
+                    </Text>)}
+
+                    <View style={{...styles.buttonContainer,
+                        marginTop: authError ? 20 : 40}}
+                    >
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={submitLogin}
+                        >
+                            <Text style={styles.buttonLabel}>Je veux prendre ma dose quotidienne</Text>
+                        </TouchableOpacity>
+                    </View>
+                </KeyboardAvoidingView>
+            </TouchableWithoutFeedback>)
     )
 }
 
