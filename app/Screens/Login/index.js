@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
-import { View, Text, TextInput, KeyboardAvoidingView, TouchableOpacity, Keyboard, TouchableWithoutFeedback, Image } from 'react-native';
+import { View, Text, TextInput, KeyboardAvoidingView, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { styles } from './styles';
 import {theme} from "../../Design/theme";
 import {loginInputs} from "./constants";
 import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
+import {useDispatch} from "react-redux";
+import {updateLoadingState} from "../Loading/loadingSlice";
 
 const Login = () => {
 
@@ -12,8 +14,9 @@ const Login = () => {
         password: 'loulou95'
     });
     const [focused, setFocused] = useState(null);
-    const [loading, setLoading] = useState(false);
     const [authError, setAuthError] = useState(false);
+
+    const dispatch = useDispatch();
 
     const onChangeCredentials = (id, text) => {
         setCredentials({
@@ -29,72 +32,62 @@ const Login = () => {
 
         Keyboard.dismiss();
 
-        setLoading(true);
+        dispatch(updateLoadingState(true));
 
         const auth = getAuth();
 
         signInWithEmailAndPassword(auth, username, password)
-            .then(() => {
-                setLoading(false);
-            })
             .catch(() => {
-                setLoading(false);
+                dispatch(updateLoadingState(false));
                 setAuthError(true);
             });
     }
 
-    return (loading ?
-            (<View style={styles.loaderContainer}>
-                <Image
-                    source={require('../../../assets/loading.gif')}
-                    style={styles.loader}
-                />
-            </View>)
-            :
-            (<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-                <KeyboardAvoidingView
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
-                    style={styles.container}
-                >
-                    <Text style={styles.welcomeSentence}>Bienvenue à votre source</Text>
-                    <Text style={styles.welcomeText}>éternelle d'ondes positives.</Text>
+    return (
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                style={styles.container}
+            >
+                <Text style={styles.welcomeSentence}>Bienvenue à votre source</Text>
+                <Text style={styles.welcomeText}>éternelle d'ondes positives.</Text>
 
-                    {loginInputs.map((input, index, array) => (
-                        <View style={{...styles.inputContainer,
-                            marginBottom: index !== array.length - 1 ? 20 : 0}}
-                        >
-                            <Text style={styles.inputLabel}>{input.label}</Text>
-
-                            <TextInput
-                                style={{...styles.input,
-                                    borderWidth: focused === index ? 2 : 0}}
-                                selectionColor={theme.primaryColor}
-                                secureTextEntry={input.password}
-                                value={credentials[input.id]}
-                                onChangeText={(text) => onChangeCredentials(input.id, text)}
-                                onFocus={() => setFocused(index)}
-                                onBlur={() => setFocused(null)}
-                            />
-                        </View>
-                    ))}
-
-                    {authError &&
-                    (<Text style={styles.errorMessage}>
-                        Votre tentative de connexion a échoué. Veuillez réessayer.
-                    </Text>)}
-
-                    <View style={{...styles.buttonContainer,
-                        marginTop: authError ? 20 : 40}}
+                {loginInputs.map((input, index, array) => (
+                    <View style={{...styles.inputContainer,
+                        marginBottom: index !== array.length - 1 ? 20 : 0}}
                     >
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={submitLogin}
-                        >
-                            <Text style={styles.buttonLabel}>Je veux prendre ma dose quotidienne</Text>
-                        </TouchableOpacity>
+                        <Text style={styles.inputLabel}>{input.label}</Text>
+
+                        <TextInput
+                            style={{...styles.input,
+                                borderWidth: focused === index ? 2 : 0}}
+                            selectionColor={theme.primaryColor}
+                            secureTextEntry={input.password}
+                            value={credentials[input.id]}
+                            onChangeText={(text) => onChangeCredentials(input.id, text)}
+                            onFocus={() => setFocused(index)}
+                            onBlur={() => setFocused(null)}
+                        />
                     </View>
-                </KeyboardAvoidingView>
-            </TouchableWithoutFeedback>)
+                ))}
+
+                {authError &&
+                (<Text style={styles.errorMessage}>
+                    Votre tentative de connexion a échoué. Veuillez réessayer.
+                </Text>)}
+
+                <View style={{...styles.buttonContainer,
+                    marginTop: authError ? 20 : 40}}
+                >
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={submitLogin}
+                    >
+                        <Text style={styles.buttonLabel}>Je veux prendre ma dose quotidienne</Text>
+                    </TouchableOpacity>
+                </View>
+            </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
     )
 }
 

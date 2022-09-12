@@ -2,14 +2,6 @@ import { StyleSheet, Dimensions } from "react-native";
 import {theme} from "../../Design/theme";
 
 export const styles = StyleSheet.create({
-    loaderContainer: {
-        width: Dimensions.get('screen').width,
-        height: Dimensions.get('screen').height,
-    },
-    loader: {
-        width: Dimensions.get('screen').width,
-        height: Dimensions.get('screen').height,
-    },
     container: {
         width: Dimensions.get('screen').width,
         height: Dimensions.get('screen').height,
@@ -21,12 +13,12 @@ export const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     welcomeSentence: {
-        fontFamily: 'ProximaNova',
+        fontFamily: theme.primaryFont.bold,
         fontSize: 22
     },
     welcomeText: {
         marginBottom: 30,
-        fontFamily: 'ProximaNova',
+        fontFamily: theme.primaryFont.bold,
         fontSize: 22
     },
     inputContainer: {
@@ -37,7 +29,7 @@ export const styles = StyleSheet.create({
     },
     inputLabel: {
         marginBottom: 10,
-        fontFamily: 'ProximaNova',
+        fontFamily: theme.primaryFont.regular,
         textAlign: 'center'
     },
     input: {
@@ -48,12 +40,12 @@ export const styles = StyleSheet.create({
         borderColor: 'black',
         borderRadius: 5,
         elevation: 8,
-        fontFamily: 'ProximaNova',
+        fontFamily: theme.primaryFont.regular,
     },
     errorMessage: {
         paddingHorizontal: 20,
         marginTop: 30,
-        fontFamily: 'ProximaNova',
+        fontFamily: theme.primaryFont.regular,
         textAlign: 'center'
     },
     buttonContainer: {
@@ -69,7 +61,7 @@ export const styles = StyleSheet.create({
         borderRadius: 10,
     },
     buttonLabel: {
-        fontFamily: 'ProximaNova',
+        fontFamily: theme.primaryFont.regular,
         fontSize: 16,
         textAlign: 'center',
     }

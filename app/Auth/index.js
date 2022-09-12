@@ -3,6 +3,7 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import {updateAuthState} from "./authSlice";
 import { useDispatch } from 'react-redux';
 import { getDatabase, ref, child, get } from "firebase/database";
+import {updateLoadingState} from "../Screens/Loading/loadingSlice";
 
 const Auth = ({ children }) => {
 
@@ -24,6 +25,7 @@ const Auth = ({ children }) => {
             authDetails = {...authDetails, ...authDetailsBySnapshot};
         }
 
+        dispatch(updateLoadingState(false));
         dispatch(updateAuthState(authDetails));
     });
 

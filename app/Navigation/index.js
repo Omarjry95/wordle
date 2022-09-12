@@ -1,36 +1,44 @@
 import * as React from 'react';
-import Login from "../Screens/Login";
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {useSelector} from "react-redux";
 import {authSelector} from "../Auth/authSlice";
-import Home from "../Screens/Home";
+import {ALLOWED_ROUTES, LOADING_ROUTES, RESTRICTED_ROUTES} from "./routes";
+import {loadingSelector} from "../Screens/Loading/loadingSlice";
 
 const Stack = createNativeStackNavigator();
 
 export default function Navigation() {
 
-    const authState = useSelector(authSelector);
+    const { isAuthenticated } = useSelector(authSelector);
+    const { loading } = useSelector(loadingSelector);
+
+    const getStackGroup = () => {
+        function setScreens(routes, array) {
+            routes.map((routeProps) => array.push(<Stack.Screen {...routeProps} />));
+        }
+
+        let screens = [];
+
+        switch (true) {
+            case loading:
+                setScreens(LOADING_ROUTES, screens);
+                break;
+            case isAuthenticated:
+                setScreens(RESTRICTED_ROUTES, screens);
+                break;
+            default:
+                setScreens(ALLOWED_ROUTES, screens);
+                break;
+        }
+
+        return screens;
+    }
 
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                {!authState.isAuthenticated ?
-                <Stack.Group>
-                    <Stack.Screen
-                        name="Login"
-                        component={Login}
-                        options={{ headerShown: false }}
-                    />
-                </Stack.Group>
-                :
-                <Stack.Group>
-                    <Stack.Screen
-                        name="Home"
-                        component={Home}
-                        options={{ headerShown: false }}
-                    />
-                </Stack.Group>}
+                {getStackGroup()}
             </Stack.Navigator>
         </NavigationContainer>
     )
