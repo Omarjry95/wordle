@@ -7,7 +7,7 @@ import { persistReducer } from 'redux-persist';
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    blacklist: [ "auth" ]
+    blacklist: [ "loading", "auth", "status", "currentWord" ]
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

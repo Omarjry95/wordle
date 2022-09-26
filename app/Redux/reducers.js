@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import auth from "../Auth/authSlice";
 import loading from "../Screens/Loading/loadingSlice";
+import auth from "../Auth/authSlice";
+import status from "../Auth/statusSlice";
 
 export default combineReducers({
     loading,
-    auth
+    auth,
+    status
 })

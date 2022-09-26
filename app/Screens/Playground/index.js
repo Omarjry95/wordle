@@ -1,83 +1,170 @@
-import React, {useState, useEffect, useRef, createRef} from 'react';
-import { View, TextInput, KeyboardAvoidingView } from 'react-native';
+import React, {useState, useMemo, useEffect} from 'react';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { styles } from "./styles";
+import {getMatrix} from "./utils";
+import {theme} from "../../Design/theme";
+import usePrevious from "../../Utils/Hooks/UsePrevious";
+import FakeKeyboard from "./components/FakeKeyboard";
+import PlaygroundEnvironment from "./components/PlaygroundEnvironment";
+import {getDatabase, ref, set} from "firebase/database";
+import {useSelector} from "react-redux";
+import {authSelector} from "../../Auth/authSlice";
 
 export default function Playground() {
 
-    const inputsRef = useRef(Array.from({ length: 25 }, (v, k) => k).map((i) => createRef()));
-
+    const [currentWord, updateCurrentWord] = useState(undefined);
     const [row, setRow] = useState(0);
     const [column, setColumn] = useState(0);
-    const [words, setWords] = useState([Array.from({ length: 5 }, (v, k) => '')]);
+    const [words, setWords] = useState(getMatrix(5, ''));
+
+    const { user } = useSelector(authSelector);
+    const { id: userId } = user;
+
+    const isSubmitDisabled = () => { return !words.every((l) => l.length); }
+
+    const buttonStyle = useMemo(() => {
+        return {
+            borderColor: isSubmitDisabled() ? 'gray' : 'black',
+            elevation: isSubmitDisabled() ? 0 : 6
+        }
+    }, [row, words]);
+
+    const buttonTextStyle = useMemo(() => {
+        return { color: isSubmitDisabled() ? 'gray' : 'black' }
+    }, [row, words]);
+
+    const previousWords = usePrevious(words);
 
     useEffect(() => {
-        if (!(isNaN(row) && isNaN(column))) {
-            inputsRef?.current[row * 5 + column].current?.focus();
+        if (words && previousWords) {
+            let newColumn = column;
+
+            if (words[column].length) {
+                newColumn = newColumn + 1;
+
+                newColumn = newColumn > 4 ? 0 : newColumn;
+            }
+            else if (words[column] === previousWords[column]) {
+                newColumn = newColumn - 1;
+
+                newColumn = newColumn < 0 ? 4 : newColumn;
+            }
+
+            setColumn(newColumn);
         }
-    }, [row, column]);
-
-    const generateItemsByNumber = () => {
-        return Array.from({ length: 5 }, (v, k) => k);
-    }
-
-    const matrixXY = generateItemsByNumber();
+    }, [words]);
 
     const getYCustomStyle = (index, array) => {
-        return {
-            marginBottom: index !== array.length - 1 ? 10 : 0
+        return { marginBottom: index !== array.length - 1 ? 10 : 0 }
+    }
+
+    const getBackground = (yIndex, xIndex) => {
+        let background = 'white';
+
+        if (yIndex < row) {
+            const mysteryChars = currentWord.name.split('');
+
+            if (currentWord.steps[yIndex][xIndex].toLowerCase() === mysteryChars[xIndex].toLowerCase()) {
+                background = theme.secondaryColor;
+            }
+            else if (mysteryChars.findIndex((c) => c === currentWord.steps[yIndex][xIndex].toLowerCase()) !== -1) {
+                background = theme.thirdColor;
+            }
         }
+        else if (yIndex === row && xIndex === column) {
+            background = 'rgba(0, 0, 0, 0.1)';
+        }
+
+        return background;
     }
 
     const getXCustomStyle = (yIndex, xIndex, array) => {
         return {
             marginRight: xIndex !== array.length - 1 ? 10 : 0,
-            backgroundColor: yIndex <= row ? 'white' : 'rgba(255, 255, 255, 0.2)',
-            borderColor: yIndex === row ? 'black' : 'white'
+            backgroundColor: yIndex > row ? 'rgba(255, 255, 255, 0.2)' : getBackground(yIndex, xIndex),
+            borderColor: yIndex > row ? 'white' : 'black'
         }
     }
 
-    const setLetter = (letter, yIndex, xIndex) => {
+    const setLetter = (letter) => {
         let newWords = JSON.parse(JSON.stringify(words));
 
-        newWords[yIndex][xIndex] = letter.length ? letter.charAt(letter.length - 1).toUpperCase() : '';
+        newWords[column] = letter;
 
         setWords(newWords);
-
-        if (letter.length > 0) {
-            setColumn(column + 1 > 4 ? 0 : column + 1);
-        }
     }
 
-    const adaptSelection = (yIndex, xIndex) => {
-        const position = words[yIndex] ? words[yIndex][xIndex].length : 0;
+    const getInnerLetter = (yIndex, xIndex) => {
+        const innerLetter = '';
 
-        return { start: position, end: position };
+        if (yIndex < row) {
+            return currentWord.steps[yIndex][xIndex];
+        }
+        else if (yIndex === row) {
+            return words[xIndex];
+        }
+
+        return innerLetter;
+    }
+
+    const onSubmitWord = () => {
+        if (words.join('').toLowerCase() === currentWord.name) {
+            console.log("GAGNE");
+
+            return;
+        }
+
+        if (row + 1 > 4) {
+            return;
+        }
+
+        set(ref(getDatabase(), 'words/' + currentWord.id + '/solvers/' + userId + '/steps'), [...currentWord.steps, words]);
     }
 
     return (
-        <KeyboardAvoidingView
-            style={styles.container}
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
+        <PlaygroundEnvironment
+            currentWordState={currentWord}
+            updateCurrentWord={updateCurrentWord}
+            setRow={setRow}
+            setColumn={setColumn}
+            setWords={setWords}
         >
-            <View style={styles.inputGroup}>
-                {matrixXY.map((y, yIndex, yArray) => (
-                    <View style={{...styles.inputRow, ...getYCustomStyle(yIndex, yArray) }}>
-                        {matrixXY.map((x, xIndex, xArray) => (
-                            <View style={{...styles.letterDisc, ...getXCustomStyle(yIndex, xIndex, xArray)}}>
-                                <TextInput
-                                    caretHidden={false}
-                                    ref={inputsRef?.current[yIndex * 5 + xIndex]}
-                                    style={styles.textInput}
-                                    value={words[yIndex] ? words[yIndex][xIndex] : ''}
-                                    onChangeText={(letter) => setLetter(letter, yIndex, xIndex)}
-                                    maxLength={1}
-                                    selection={adaptSelection(yIndex, xIndex)}
-                                />
-                            </View>
-                        ))}
+            {currentWord ?
+                (<View style={styles.container}>
+                    <View style={styles.playgroundContainer}>
+                        <View style={styles.inputGroup}>
+                            {getMatrix(5).map((y, yIndex, yArray) => (
+                                <View style={{...styles.inputRow, ...getYCustomStyle(yIndex, yArray) }}>
+                                    {getMatrix(5).map((x, xIndex, xArray) => (
+                                        <TouchableOpacity
+                                            style={{...styles.letterDisc, ...getXCustomStyle(yIndex, xIndex, xArray)}}
+                                            activeOpacity={1}
+                                            onPress={() => setColumn(xIndex)}
+                                        >
+                                            <Text style={styles.textDisplay}>
+                                                {getInnerLetter(yIndex, xIndex)}
+                                            </Text>
+                                        </TouchableOpacity>
+                                    ))}
+                                </View>
+                            ))}
+                        </View>
+
+                        <TouchableOpacity
+                            style={{...styles.button, ...buttonStyle }}
+                            disabled={isSubmitDisabled()}
+                            onPress={() => onSubmitWord()}
+                        >
+                            <Text style={{...styles.buttonText, ...buttonTextStyle }}>
+                                Je confirme
+                            </Text>
+                        </TouchableOpacity>
                     </View>
-                ))}
-            </View>
-        </KeyboardAvoidingView>
+
+                    <FakeKeyboard setLetter={setLetter} />
+                </View>)
+                :
+                (<View style={styles.container} />)}
+        </PlaygroundEnvironment>
     )
 }

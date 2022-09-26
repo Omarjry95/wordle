@@ -1062,30 +1062,25 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@expo-google-fonts/cairo@^0.2.2":
+"@expo-google-fonts/courier-prime@^0.2.2":
   version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@expo-google-fonts/cairo/-/cairo-0.2.2.tgz#cab77dc480a15c351d6904c4be4c2af2cfbf9650"
-  integrity sha512-WDCS/FGN3+JT0vSfMk0qBqH9sZ54LXHOrIRCAW+eyOrJPEDxFmiB9VKFwvhnssVelFc9e+tWuanK7jmrC3KsCA==
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/courier-prime/-/courier-prime-0.2.2.tgz#af1e6ae51f121c9f219acc8bea11ac60587f5901"
+  integrity sha512-741+S6pmJ73AwaXade/ahKuzEfynSTpkiruASS6fUc97c4/pAVHmJlBztVd81FwzEvFFzsjHrDGHUNHm2uwLWg==
+
+"@expo-google-fonts/inconsolata@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/inconsolata/-/inconsolata-0.2.2.tgz#7370d08494c0091233e609aed98260697c34c0a7"
+  integrity sha512-Wv7ZKsbmJ9R9x6IvB0kI+cHnstEVO9HcrstHZrEqaJ6+RWheRKKmCUztTaC1+Erm6PXefPFyE/OlOnsIYGOI3w==
 
 "@expo-google-fonts/lato@^0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@expo-google-fonts/lato/-/lato-0.2.2.tgz#777a757a74c03a2677ed33dacd7df61cd65b735e"
   integrity sha512-axw+QWJYyDHuj/W0364OFRu5MyNEU332up1bE6o4K7fP0e0mSDgocof7Eip4AP65SmP8zsPIR0LtJezORnkDBw==
 
-"@expo-google-fonts/montserrat@^0.2.2":
+"@expo-google-fonts/roboto-mono@^0.2.2":
   version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@expo-google-fonts/montserrat/-/montserrat-0.2.2.tgz#1c2522b6fcacf7a3b561db2f3fd7a90a52613db1"
-  integrity sha512-kpK++6mnyPPNVuZQ5ScU/YmvNsbDQGNgxwPgkmAKFrctAhfwg4KxotmmuNnn2ZaKLPtGYjP8/M8JIO3/tAm9ag==
-
-"@expo-google-fonts/open-sans@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@expo-google-fonts/open-sans/-/open-sans-0.2.2.tgz#def732e59536745a7df324b870643b57b25620f8"
-  integrity sha512-jITtlGDb5QZ3O8W70eqvGki7+tYGQ/+pPEv58RM7n5QQ6xXJPXumE4KnjDClEvEQ2zZYzVlVo6InqARIgEf1Kg==
-
-"@expo-google-fonts/tajawal@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@expo-google-fonts/tajawal/-/tajawal-0.2.2.tgz#1912b4b23b7f91b9d20f8b637cfcdb504a2d20fc"
-  integrity sha512-XIx1dcm9we10BtzuI8zDoYh3kVV57/lNJzH6rKW3WgzDRq+vRAS5dF+C9JR4x11nGn7rQvTYDh5N/pD/k2zRZg==
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/roboto-mono/-/roboto-mono-0.2.2.tgz#90ba396114bf8b293154a25bd869de238b5f0884"
+  integrity sha512-x3a3wZ4Qq/OHzSL9fH492XCpTrCzhXvkVh+h9Q8+ESoHAqbR3EFx/SuZIFlLlX8Dg5AWesGOZxOQIRCOSo01nw==
 
 "@expo/config-plugins@4.0.6":
   version "4.0.6"
