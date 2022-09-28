@@ -16,8 +16,10 @@ export default function Playground() {
     const [row, setRow] = useState(0);
     const [column, setColumn] = useState(0);
     const [words, setWords] = useState(getMatrix(5, ''));
+    const [winner, setWinner] = useState(false);
 
     const { user } = useSelector(authSelector);
+
     const { id: userId } = user;
 
     const isSubmitDisabled = () => { return !words.every((l) => l.length); }
@@ -109,7 +111,7 @@ export default function Playground() {
 
     const onSubmitWord = () => {
         if (words.join('').toLowerCase() === currentWord.name) {
-            console.log("GAGNE");
+            setWinner(true);
 
             return;
         }
@@ -127,7 +129,9 @@ export default function Playground() {
             updateCurrentWord={updateCurrentWord}
             setRow={setRow}
             setColumn={setColumn}
+            words={words}
             setWords={setWords}
+            winner={winner}
         >
             {currentWord ?
                 (<View style={styles.container}>
