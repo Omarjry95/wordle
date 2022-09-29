@@ -10,7 +10,9 @@ import {getDatabase, ref, set} from "firebase/database";
 import {useSelector} from "react-redux";
 import {authSelector} from "../../Auth/authSlice";
 
-export default function Playground() {
+export default function Playground(props) {
+
+    const { navigation } = props;
 
     const [currentWord, updateCurrentWord] = useState(undefined);
     const [row, setRow] = useState(0);
@@ -123,15 +125,15 @@ export default function Playground() {
         set(ref(getDatabase(), 'words/' + currentWord.id + '/solvers/' + userId + '/steps'), [...currentWord.steps, words]);
     }
 
+    const playgroundEnvironmentProps = {
+        currentWordState: currentWord,
+        currentTry: words,
+        updateCurrentWord, setRow, setColumn, setWords, winner, navigation
+    }
+
     return (
         <PlaygroundEnvironment
-            currentWordState={currentWord}
-            updateCurrentWord={updateCurrentWord}
-            setRow={setRow}
-            setColumn={setColumn}
-            words={words}
-            setWords={setWords}
-            winner={winner}
+            {...playgroundEnvironmentProps}
         >
             {currentWord ?
                 (<View style={styles.container}>

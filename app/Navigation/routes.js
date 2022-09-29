@@ -2,10 +2,12 @@ import Home from "../Screens/Home";
 import Login from "../Screens/Login";
 import Loading from "../Screens/Loading";
 import Playground from "../Screens/Playground";
+import Result from "../Screens/Result";
 
 export const RESTRICTED_ROUTES = [
     { name: 'Home', component: Home, options: { headerShown: false } },
-    { name: 'Playground', component: Playground, options: { headerShown: false } }
+    { name: 'Playground', component: Playground, options: { headerShown: false } },
+    { name: 'Result', component: Result, options: { headerShown: false } }
 ]
 
 export const ALLOWED_ROUTES = [
