@@ -1067,20 +1067,10 @@
   resolved "https://registry.yarnpkg.com/@expo-google-fonts/courier-prime/-/courier-prime-0.2.2.tgz#af1e6ae51f121c9f219acc8bea11ac60587f5901"
   integrity sha512-741+S6pmJ73AwaXade/ahKuzEfynSTpkiruASS6fUc97c4/pAVHmJlBztVd81FwzEvFFzsjHrDGHUNHm2uwLWg==
 
-"@expo-google-fonts/inconsolata@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@expo-google-fonts/inconsolata/-/inconsolata-0.2.2.tgz#7370d08494c0091233e609aed98260697c34c0a7"
-  integrity sha512-Wv7ZKsbmJ9R9x6IvB0kI+cHnstEVO9HcrstHZrEqaJ6+RWheRKKmCUztTaC1+Erm6PXefPFyE/OlOnsIYGOI3w==
-
 "@expo-google-fonts/lato@^0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@expo-google-fonts/lato/-/lato-0.2.2.tgz#777a757a74c03a2677ed33dacd7df61cd65b735e"
   integrity sha512-axw+QWJYyDHuj/W0364OFRu5MyNEU332up1bE6o4K7fP0e0mSDgocof7Eip4AP65SmP8zsPIR0LtJezORnkDBw==
-
-"@expo-google-fonts/roboto-mono@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@expo-google-fonts/roboto-mono/-/roboto-mono-0.2.2.tgz#90ba396114bf8b293154a25bd869de238b5f0884"
-  integrity sha512-x3a3wZ4Qq/OHzSL9fH492XCpTrCzhXvkVh+h9Q8+ESoHAqbR3EFx/SuZIFlLlX8Dg5AWesGOZxOQIRCOSo01nw==
 
 "@expo/config-plugins@4.0.6":
   version "4.0.6"
@@ -3140,6 +3130,13 @@ expo-asset@~8.4.6:
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
 
+expo-av@~10.2.0:
+  version "10.2.1"
+  resolved "https://registry.yarnpkg.com/expo-av/-/expo-av-10.2.1.tgz#c08bce464d673d0e90c68cac082bfb75a9437f25"
+  integrity sha512-thrkHVg4HVn8L+jHKVnXYd4TLkJQblFE8QXd3d1hwrYG63gehQT2nK4DM0Frl50EcdV8YN9XjhwHobtK5oMc9A==
+  dependencies:
+    "@expo/config-plugins" "^4.0.2"
+
 expo-constants@~13.0.2:
   version "13.0.2"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-13.0.2.tgz#b489ecd575cc82a9a0b3dfbf2385d45a44300eb1"
@@ -3191,6 +3188,22 @@ expo-modules-core@0.6.5:
   dependencies:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
+
+expo-navigation-bar@~1.1.1:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/expo-navigation-bar/-/expo-navigation-bar-1.1.2.tgz#1caddf41b3fd7652796db933ffe59a1ab0ed658c"
+  integrity sha512-6TEmFArrCazRKrhQrWho1sBEXiFBP+7MIcAeZ5wEB+QEb7ZkYmC+JKFfZl3oz9VWD7nnhgcLRgFE9XL0n74Fow==
+  dependencies:
+    "@expo/config-plugins" "^4.0.2"
+    "@react-native/normalize-color" "^2.0.0"
+    debug "^4.3.2"
+
+expo-screen-orientation@~4.1.1:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/expo-screen-orientation/-/expo-screen-orientation-4.1.2.tgz#52b0799adf2bf7c275bfca308a97797731fa9f53"
+  integrity sha512-ZK9JnIuys3bL0IPIkBazBwc6dZambm2xxu0TEV7HYtowb769XLTFOJgVttrpeNDMXEt/22+dhCE4ZFaPNu6JlA==
+  dependencies:
+    "@expo/config-plugins" "^4.0.2"
 
 expo-status-bar@~1.2.0:
   version "1.2.0"

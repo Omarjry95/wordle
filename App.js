@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useFonts, Lato_400Regular, Lato_700Bold, Lato_700Bold_Italic } from '@expo-google-fonts/lato';
 import { CourierPrime_400Regular } from '@expo-google-fonts/courier-prime';
 import {initFirebase} from "./app/Settings/Firebase/Init";
-import { Provider as ReduxProvider } from 'react-redux'
+import {Provider as ReduxProvider} from 'react-redux'
 import configureAppStore from "./app/Redux/store";
 import Auth from "./app/Auth";
 import Navigation from "./app/Navigation";

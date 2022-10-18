@@ -3,6 +3,7 @@ import {theme} from "../../Design/theme";
 
 export const styles = StyleSheet.create({
     container: {
+        position: "relative",
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -16,6 +17,25 @@ export const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
+    },
+    counterContainer: {
+        width: 35,
+        height: 35,
+        backgroundColor: "black",
+        borderWidth: 1,
+        borderColor: "white",
+        borderRadius: 35,
+        elevation: 4,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "absolute",
+        top: 45,
+        right: 25
+    },
+    counter: {
+        color: "white",
+        fontFamily: theme.primaryFont.regular
     },
     text: {
         marginBottom: 30,

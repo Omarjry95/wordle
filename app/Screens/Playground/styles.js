@@ -20,6 +20,7 @@ const getKeyboardElement = () => {
 export const styles = StyleSheet.create({
     container: {
         backgroundColor: theme.primaryColor,
+        position: "relative",
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -116,5 +117,12 @@ export const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    loadingContainer: {
+        backgroundColor: "rgba(0, 0, 0, 0.6)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flex: 1
     }
 });
