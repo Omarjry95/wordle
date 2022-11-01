@@ -3,7 +3,8 @@ import {theme} from "../../Design/theme";
 
 export const styles = StyleSheet.create({
     container: {
-        position: "relative",
+        backgroundColor: 'white',
+        position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -14,28 +15,11 @@ export const styles = StyleSheet.create({
         width: '100%',
         paddingTop: 100,
         paddingHorizontal: 30,
+        position: 'relative',
+        zIndex: 1,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
-    },
-    counterContainer: {
-        width: 35,
-        height: 35,
-        backgroundColor: "black",
-        borderWidth: 1,
-        borderColor: "white",
-        borderRadius: 35,
-        elevation: 4,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        position: "absolute",
-        top: 45,
-        right: 25
-    },
-    counter: {
-        color: "white",
-        fontFamily: theme.primaryFont.regular
     },
     text: {
         marginBottom: 30,
@@ -63,5 +47,19 @@ export const styles = StyleSheet.create({
         fontFamily: theme.primaryFont.regular,
         fontSize: 16,
         textAlign: 'center'
+    },
+    bottomContainer: {
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+        top: 120,
+        left: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-start'
+    },
+    photo: {
+        maxWidth: '100%',
+        maxHeight: '100%'
     }
 })

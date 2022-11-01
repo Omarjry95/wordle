@@ -1,13 +1,26 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import {View, Text, TouchableOpacity, Image} from 'react-native';
 import { styles } from './styles';
-import {texts} from "./constants";
+import {images, texts} from "./constants";
 import useBackHandler from "../../Utils/Hooks/UseBackHandler";
+import {resetConfig, updateConfig} from "../../Auth/configSlice";
+import {theme} from "../../Design/theme";
+import {useDispatch} from "react-redux";
 
 export default function Result(props) {
 
     const { navigation, route } = props;
     const { attempts, sceneUrl } = route.params;
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(updateConfig({
+            statusBarBackgroundColor: 'white'
+        }));
+
+        return () => { dispatch(resetConfig()); }
+    }, []);
 
     useBackHandler(navigation);
 
@@ -37,6 +50,14 @@ export default function Result(props) {
                             <Text style={styles.buttonText}>Je veux rejouer</Text>
                         </TouchableOpacity>)}
                 </View>
+            </View>
+
+            <View style={styles.bottomContainer}>
+                <Image
+                    source={images[attempts > 0 ? 'winner_' + attempts : 'loser']}
+                    style={styles.photo}
+                    resizeMode={attempts > 0 ? 'stretch' : 'contain'}
+                />
             </View>
         </View>
     )

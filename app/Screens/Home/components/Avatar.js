@@ -5,15 +5,15 @@ import { Image, View, Text } from "react-native";
 
 export default function Avatar(props) {
 
-    const { displayName, uri } = props;
+    const { displayName, uri, successRatio } = props;
 
     return (
         <View style={styles.avatarContainer}>
             <View style={styles.avatarWrapper}>
                 <Progress.Circle
                     animated
-                    size={195}
-                    progress={0.8}
+                    size={215}
+                    progress={successRatio}
                     color={'white'}
                     borderWidth={0}
                     allowFontScaling={false}

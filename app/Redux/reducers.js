@@ -4,11 +4,15 @@ import auth from "../Auth/authSlice";
 import status from "../Auth/statusSlice";
 import scene from "../Auth/sceneSlice";
 import playground from "../Screens/Playground/playgroundSlice";
+import home from "../Screens/Home/homeSlice";
+import config from "../Auth/configSlice";
 
 export default combineReducers({
     loading,
     auth,
     status,
     scene,
-    playground
+    playground,
+    home,
+    config
 })

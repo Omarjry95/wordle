@@ -1,14 +1,15 @@
 {
   "expo": {
-    "name": "Wordle",
-    "slug": "Wordle",
+    "name": "My Daily Good Vibe",
+    "slug": "my-daily-good-vibe",
     "version": "1.0.0",
+    "owner": "omarjarray1995",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#E68585"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,12 +23,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#E68585"
+      },
+      "package": "com.omarjarray1995.mydailygoodvibe"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ace17571-58d1-4c81-a715-0a01110ee080"
+      }
     }
   }
 }

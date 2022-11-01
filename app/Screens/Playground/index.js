@@ -1,5 +1,5 @@
 import React, {useMemo, useEffect, useState} from 'react';
-import {View, TouchableOpacity, Text, Modal, ActivityIndicator} from 'react-native';
+import {View, TouchableOpacity, Text, Modal, ActivityIndicator, ImageBackground} from 'react-native';
 import { styles } from "./styles";
 import {getMatrix} from "./utils";
 import {theme} from "../../Design/theme";
@@ -11,6 +11,7 @@ import {authSelector} from "../../Auth/authSlice";
 import {initPlayground, playgroundSelector, setPlaygroundState} from "./playgroundSlice";
 import {statusSelector} from "../../Auth/statusSlice";
 import {sceneSelector} from "../../Auth/sceneSlice";
+import {getTodayDateFormatted} from "../../Utils/Date/dateUtils";
 
 export default function Playground(props) {
 
@@ -196,12 +197,12 @@ export default function Playground(props) {
                     const winningWordSteps = winningWord.solvers[userId].steps || [];
                     const finalAttempts = [...winningWordSteps, letters];
 
-                    console.log(finalAttempts);
-
                     const chosenScene = getRandomItem(availableScenes);
 
+                    const date = getTodayDateFormatted();
+
                     set(ref(getDatabase(), 'words/' + winningWord.id + '/solvers/' + userId),
-                        { status: doneStatus.id, steps: finalAttempts, scene: chosenScene.id })
+                        { status: doneStatus.id, steps: finalAttempts, scene: chosenScene.id, date })
                         .then(() => navigation.navigate('Result', { attempts: finalAttempts.length, sceneUrl: chosenScene.url }));
                 }
             }
@@ -233,6 +234,12 @@ export default function Playground(props) {
     return (currentWord ?
             (<View style={styles.container}>
                 <View style={styles.playgroundContainer}>
+                    <ImageBackground
+                        source={require('../../../assets/images/playground-background.png')}
+                        style={styles.backgroundImage}
+                        resizeMode="stretch"
+                    />
+
                     <View style={styles.inputGroup}>
                         {getMatrix(5).map((y, yIndex, yArray) => (
                             <View style={{...styles.inputRow, marginBottom: yIndex !== yArray.length - 1 ? 10 : 0 }}>

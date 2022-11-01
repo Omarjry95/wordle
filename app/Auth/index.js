@@ -1,20 +1,20 @@
-import React, {useEffect} from 'react';
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import React from 'react';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {updateAuthState} from "./authSlice";
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { getDatabase, ref, child, get } from "firebase/database";
 import {updateLoadingState} from "../Screens/Loading/loadingSlice";
 import {setStatus} from "./statusSlice";
 import {populateScenes} from "./sceneSlice";
+import {SafeAreaView, StatusBar} from "react-native";
+import {configSelector} from "./configSlice";
 
 const Auth = ({ children }) => {
 
     const dispatch = useDispatch();
     const auth = getAuth();
 
-    useEffect(() => {
-        signOut(auth);
-    }, []);
+    const { statusBarBackgroundColor } = useSelector(configSelector);
 
     async function browseReferentialList(path, reference, attribute, values) {
         const statusSnapshot = await get(child(ref(getDatabase()), path));
@@ -60,9 +60,11 @@ const Auth = ({ children }) => {
     });
 
     return (
-        <React.Fragment>
+        <SafeAreaView style={{ flex: 1 }}>
+            <StatusBar backgroundColor={statusBarBackgroundColor} />
+
             {children}
-        </React.Fragment>
+        </SafeAreaView>
     )
 }
 

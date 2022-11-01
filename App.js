@@ -6,7 +6,7 @@ import {Provider as ReduxProvider} from 'react-redux'
 import configureAppStore from "./app/Redux/store";
 import Auth from "./app/Auth";
 import Navigation from "./app/Navigation";
-import { LogBox } from 'react-native';
+import {LogBox} from 'react-native';
 
 export default function App() {
 

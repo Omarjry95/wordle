@@ -29,12 +29,21 @@ export const styles = StyleSheet.create({
     },
     // Playground Styles
     playgroundContainer: {
-        paddingHorizontal: 25,
+        // paddingHorizontal: 25,
+        position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         flex: 1
+    },
+    backgroundImage: {
+        width: '100%',
+        height: '100%',
+        opacity: 0.6,
+        position: 'absolute',
+        top: 20,
+        left: -35
     },
     inputGroup: {
         marginBottom: 30,

@@ -10,8 +10,8 @@ import {updateLoadingState} from "../Loading/loadingSlice";
 const Login = () => {
 
     const [credentials, setCredentials] = useState({
-        username: 'omarjry9@gmail.com',
-        password: 'loulou95'
+        username: 'hadil.fares@gmail.com',
+        password: '02/11/2022'
     });
     const [focused, setFocused] = useState(null);
     const [authError, setAuthError] = useState(false);

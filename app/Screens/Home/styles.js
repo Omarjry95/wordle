@@ -11,17 +11,27 @@ const getCircularElement = (dimension) => {
 
 export const styles = StyleSheet.create({
     container: {
-        paddingTop: 60,
-        paddingBottom: 30,
+        // paddingTop: 60,
+        // paddingBottom: 30,
         backgroundColor: theme.primaryColor,
+        position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-between',
         flex: 1
     },
+    backgroundImage: {
+        width: '100%',
+        height: '100%',
+        opacity: 0.2,
+        position: 'absolute',
+        top: 0,
+        left: 0
+    },
     // Avatar Styles
     avatarContainer: {
+        paddingTop: 60,
         marginBottom: 30,
         display: 'flex',
         flexDirection: 'column',
@@ -30,7 +40,7 @@ export const styles = StyleSheet.create({
         flex: 1
     },
     avatarWrapper: {
-        ...getCircularElement(210),
+        ...getCircularElement(230),
         marginBottom: 15,
         backgroundColor: 'black',
         display: 'flex',
@@ -39,7 +49,8 @@ export const styles = StyleSheet.create({
         position: 'relative'
     },
     avatar: {
-        ...getCircularElement(170),
+        ...getCircularElement(190),
+        backgroundColor: 'white',
         position: 'absolute',
         top: 20,
         left: 20
@@ -52,6 +63,7 @@ export const styles = StyleSheet.create({
     // Menu Styles
     menuContainer: {
         paddingHorizontal: 25,
+        paddingBottom: 30,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -75,20 +87,21 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 10,
         backgroundColor: theme.primaryColor,
         borderWidth: 2,
-        borderColor: 'black',
+        borderColor: 'gray',
         borderRadius: 10,
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-between',
-        flex: 1,
-        elevation: 6
+        flex: 1
     },
     icon: {
-        marginBottom: 15
+        marginBottom: 15,
+        color: 'gray'
     },
     label: {
+        color: 'gray',
         fontFamily: theme.primaryFont.regular,
         textAlign: 'center'
     },
@@ -105,9 +118,7 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 10,
         backgroundColor: theme.primaryColor,
         borderWidth: 2,
-        borderColor: 'black',
-        borderRadius: 10,
-        elevation: 6
+        borderRadius: 10
     },
     buttonText: {
         fontFamily: theme.primaryFont.regular,
